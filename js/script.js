@@ -2,6 +2,15 @@ function displayGraph() {
 
   axios.get('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json').then((dataset) => {
     const data = dataset.data.monthlyVariance;
+    const colorData = [
+      210,
+      175,
+      140,
+      105,
+      70,
+      35,
+      0
+    ];
     const w = 1000;
     const h = 500;
     const padding = {
@@ -42,6 +51,7 @@ function displayGraph() {
       .attr('y', (d) => yScale(d3.timeParse('%m')(d.month)))
       .attr('width', xScale.bandwidth())
       .attr('height', yScale.bandwidth())
+      .attr('fill', (d) => `hsl(${colorData[Math.floor((d.variance + dataset.data.baseTemperature) / 2)]}, 75%, 50%)`)
       .on('mouseover', handleMouseover)
       .on('mouseout', handleMouseout);
 
