@@ -32,6 +32,16 @@ function displayGraph() {
       .attr('transform', `translate(${padding.left}, 0)`)
       .call(d3.axisLeft(yScale)
       .tickFormat(d3.timeFormat('%B')));
+
+    svg.selectAll('rect')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('class', 'cell')
+      .attr('x', (d) => xScale(d.year))
+      .attr('y', (d) => yScale(d3.timeParse('%m')(d.month)))
+      .attr('width', xScale.bandwidth())
+      .attr('height', yScale.bandwidth())
   }).catch(() => {
     document.querySelector('.error-message').style.display = 'block';
   });
