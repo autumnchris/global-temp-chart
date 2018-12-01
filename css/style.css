@@ -11,6 +11,16 @@ h2 {
   font-size: 1.2rem;
 }
 
+main {
+  padding: 25px 0 70px;
+}
+
+svg {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 1px 1px 13px 0px #828282;
+}
+
 footer {
   background: #fff;
   bottom: 0;
