@@ -72,6 +72,30 @@ function displayGraph() {
     function handleMouseout() {
       d3.select('.tooltip').remove();
     }
+
+    const legend = svg.append('g')
+      .attr('class', 'legend')
+      .attr('transform', 'translate(125, 25)');
+
+    legend.selectAll('rect')
+      .data(colorData)
+      .enter()
+      .append('rect')
+      .attr('x', (d, i) => i * 30)
+      .attr('y', 5)
+      .attr('width', 30)
+      .attr('height', 15)
+      .attr('fill', (d) => `hsl(${d}, 75%, 50%)`)
+      .attr('stroke', '#fff');
+
+    legend.selectAll('text')
+      .data(colorData)
+      .enter()
+      .append('text')
+      .attr('x', (d, i) => i * 30)
+      .attr('y', 30)
+      .text((d, i) => `${i * 2}+`)
+      .style('font-size', '0.7rem');
   }).catch(() => {
     document.querySelector('.error-message').style.display = 'block';
   });
