@@ -10,3 +10,23 @@ h1 {
 h2 {
   font-size: 1.2rem;
 }
+
+footer {
+  background: #fff;
+  bottom: 0;
+  font-size: 0.8rem;
+  left: 0;
+  letter-spacing: 2px;
+  padding: 14px 0;
+  position: absolute;
+  right: 0;
+  width: 100%;
+}
+
+footer a,
+footer a:visited,
+footer a:hover,
+footer a:active,
+footer a:focus {
+  color: #16599c;
+}
