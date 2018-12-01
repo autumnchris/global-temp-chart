@@ -8,6 +8,7 @@ function displayGraph() {
       .attr('width', w)
       .attr('height', h);
   }).catch(() => {
+    document.querySelector('.error-message').style.display = 'block';
   });
 }
 
