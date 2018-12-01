@@ -42,6 +42,26 @@ function displayGraph() {
       .attr('y', (d) => yScale(d3.timeParse('%m')(d.month)))
       .attr('width', xScale.bandwidth())
       .attr('height', yScale.bandwidth())
+      .on('mouseover', handleMouseover)
+      .on('mouseout', handleMouseout);
+
+    function handleMouseover(d) {
+      const tooltip = d3.select('.chart')
+        .append('div')
+        .attr('class', 'tooltip')
+        .style('opacity', 0);
+
+      tooltip.transition()
+        .duration(200)
+        .style('opacity', 0.9);
+      tooltip.html(`${d3.timeFormat('%B')(d3.timeParse('%m')(d.month))} ${d.year}<br/>${(dataset.data.baseTemperature + d.variance).toFixed(2)}&deg;C<br/>${d.variance > 0 ? '+' + d.variance.toFixed(2) : d.variance.toFixed(2)} variance`)
+        .style('left', `${d3.event.pageX + 12}px`)
+        .style('top', `${d3.event.pageY - 32}px`);
+    }
+
+    function handleMouseout() {
+      d3.select('.tooltip').remove();
+    }
   }).catch(() => {
     document.querySelector('.error-message').style.display = 'block';
   });

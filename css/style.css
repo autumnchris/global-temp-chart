@@ -21,6 +21,18 @@ svg {
   box-shadow: 1px 1px 13px 0px #828282;
 }
 
+.tooltip {
+  background: #333;
+  border-radius: 3px;
+  box-shadow: 1px 1px 13px 0px #828282;
+  color: #fff;
+  font-size: 0.8rem;
+  line-height: 20px;
+  padding: 8px;
+  position: absolute;
+  text-align: left;
+}
+
 .error-message {
   background: hsl(349, 96%, 95%);
   border: 1px solid hsl(349, 96%, 90%);
