@@ -5,7 +5,7 @@ My project for the [Visualize Data with a Heat Map challenge](https://learn.free
 ---
 
 ## Built With
-* [D3](https://d3js.org)
+* [D3.js](https://d3js.org)
 * CSS3
 * [axios](https://github.com/axios/axios)
 * [Font Awesome](https://fontawesome.com)
