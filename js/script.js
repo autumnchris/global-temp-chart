@@ -11,46 +11,34 @@ function displayGraph() {
       35,
       0
     ];
-    const w = 1000;
-    const h = 500;
     const padding = {
       top: 40,
       right: 30,
       bottom: 80,
       left: 90
     };
+    let w;
+    let h;
+
     const xScale = d3.scaleBand()
-      .domain(data.map((d) => d.year))
-      .range([padding.left, w - padding.right]);
+      .domain(data.map((d) => d.year));
     const yScale = d3.scaleBand()
-      .domain(data.map((d) => d3.timeParse('%m')(d.month)))
-      .range([padding.bottom, h - padding.top]);
+      .domain(data.map((d) => d3.timeParse('%m')(d.month)));
     const svg = d3.select('.chart')
-      .append('svg')
-      .attr('width', w)
-      .attr('height', h);
+      .append('svg');
 
     svg.append('g')
-      .attr('class', 'x-axis')
-      .attr('transform', `translate(0, ${h - padding.top})`)
-      .call(d3.axisBottom(xScale)
-      .tickValues(xScale.domain().filter((d) => d % 20 === 0)));
+      .attr('class', 'x-axis');
 
     svg.append('g')
       .attr('class', 'y-axis')
-      .attr('transform', `translate(${padding.left}, 0)`)
-      .call(d3.axisLeft(yScale)
-      .tickFormat(d3.timeFormat('%B')));
+      .attr('transform', `translate(${padding.left}, 0)`);
 
     svg.selectAll('rect')
       .data(data)
       .enter()
       .append('rect')
       .attr('class', 'cell')
-      .attr('x', (d) => xScale(d.year))
-      .attr('y', (d) => yScale(d3.timeParse('%m')(d.month)))
-      .attr('width', xScale.bandwidth())
-      .attr('height', yScale.bandwidth())
       .attr('fill', (d) => `hsl(${colorData[Math.floor((d.variance + dataset.data.baseTemperature) / 2)]}, 75%, 50%)`)
       .on('mouseover', handleMouseover)
       .on('mouseout', handleMouseout);
@@ -65,8 +53,8 @@ function displayGraph() {
         .duration(200)
         .style('opacity', 0.9);
       tooltip.html(`${d3.timeFormat('%B')(d3.timeParse('%m')(d.month))} ${d.year}<br/>${(dataset.data.baseTemperature + d.variance).toFixed(2)}&deg;C<br/>${d.variance > 0 ? '+' + d.variance.toFixed(2) : d.variance.toFixed(2)} variance`)
-        .style('left', `${d3.event.pageX + 12}px`)
-        .style('top', `${d3.event.pageY - 32}px`);
+        .style('left', `${d3.event.pageX - 60}px`)
+        .style('top', `${d3.event.pageY - 200}px`);
     }
 
     function handleMouseout() {
@@ -96,6 +84,41 @@ function displayGraph() {
       .attr('y', 30)
       .text((d, i) => `${i * 2}+`)
       .style('font-size', '0.7rem');
+
+    function resize() {
+      w = parseInt(d3.select('.chart').style('width')) * 0.9;
+      h = parseInt(d3.select('.chart').style('height'));
+
+      if (w < 1000) {
+        w = 1000;
+      }
+
+      xScale.range([padding.left, w - padding.right]);
+      yScale.range([padding.bottom, h - padding.top]);
+
+      svg.attr('width', w)
+        .attr('height', h);
+
+      svg.select('.x-axis')
+        .attr('transform', `translate(0, ${h - padding.top})`)
+        .call(d3.axisBottom(xScale)
+        .tickValues(xScale.domain().filter((d) => d % 20 === 0)));
+
+      svg.select('.y-axis')
+        .call(d3.axisLeft(yScale)
+        .tickFormat(d3.timeFormat('%B')));
+
+      svg.selectAll('.cell')
+        .attr('x', (d) => xScale(d.year))
+        .attr('y', (d) => yScale(d3.timeParse('%m')(d.month)))
+        .attr('width', xScale.bandwidth())
+        .attr('height', yScale.bandwidth());
+    }
+
+    resize();
+
+    d3.select(window)
+      .on('resize', resize);
   }).catch(() => {
     document.querySelector('.error-message').style.display = 'block';
   });
