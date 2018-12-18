@@ -1,4 +1,4 @@
-function displayGraph() {
+function displayChart() {
 
   axios.get('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json').then((dataset) => {
     const data = dataset.data.monthlyVariance;
@@ -124,4 +124,4 @@ function displayGraph() {
   });
 }
 
-displayGraph();
+displayChart();
