@@ -3,13 +3,14 @@ html {
 }
 
 h1 {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   line-height: 24px;
   padding: 30px 0 10px;
 }
 
 h2 {
-  font-size: 1.2rem;
+  font-size: 1rem;
+  line-height: 20px;
 }
 
 main {
@@ -17,11 +18,9 @@ main {
 }
 
 .chart {
-  height: 80vh;
   overflow-x: scroll;
   overflow-y: hidden;
   position: relative;
-  width: 100%;
 }
 
 svg {
@@ -35,9 +34,13 @@ svg {
   color: #fff;
   font-size: 0.8rem;
   line-height: 20px;
+  max-width: 120px;
   padding: 8px;
+  pointer-events: none;
   position: absolute;
   text-align: left;
+  width: 100%;
+  z-index: 1;
 }
 
 .error-message {
@@ -73,20 +76,13 @@ footer a:focus {
   color: #16599c;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {
 
   h1 {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
   }
 
   h2 {
-    font-size: 1rem;
-  }
-}
-
-@media only screen (orientation: landscape) and (max-height: 800px) {
-
-  .chart {
-    height: 100vh;
+    font-size: 1.2rem;
   }
 }

@@ -12,10 +12,10 @@ function displayChart() {
       0
     ];
     const padding = {
-      top: 40,
-      right: 30,
-      bottom: 80,
-      left: 90
+      top: 50,
+      right: 40,
+      bottom: 90,
+      left: 100
     };
     let w;
     let h;
@@ -26,6 +26,10 @@ function displayChart() {
       .domain(data.map((d) => d3.timeParse('%m')(d.month)));
     const svg = d3.select('.chart')
       .append('svg');
+
+    const legend = svg.append('g')
+      .attr('class', 'legend')
+      .attr('transform', 'translate(125, 35)');
 
     svg.append('g')
       .attr('class', 'x-axis');
@@ -47,23 +51,20 @@ function displayChart() {
       const tooltip = d3.select('.chart')
         .append('div')
         .attr('class', 'tooltip')
-        .style('opacity', 0);
+        .style('visibility', 'hidden');
 
       tooltip.transition()
         .duration(200)
-        .style('opacity', 0.9);
+        .style('visibility', 'visible');
+
       tooltip.html(`${d3.timeFormat('%B')(d3.timeParse('%m')(d.month))} ${d.year}<br/>${(dataset.data.baseTemperature + d.variance).toFixed(2)}&deg;C<br/>${d.variance > 0 ? '+' + d.variance.toFixed(2) : d.variance.toFixed(2)} variance`)
-        .style('left', `${d3.event.pageX - 60}px`)
-        .style('top', `${d3.event.pageY - 200}px`);
+      .style('left', `${d3.select(this).attr('x') - 20}px`)
+      .style('top', `${d3.select(this).attr('y') - 80}px`);
     }
 
     function handleMouseout() {
       d3.select('.tooltip').remove();
     }
-
-    const legend = svg.append('g')
-      .attr('class', 'legend')
-      .attr('transform', 'translate(125, 25)');
 
     legend.selectAll('rect')
       .data(colorData)
@@ -86,11 +87,20 @@ function displayChart() {
       .style('font-size', '0.7rem');
 
     function resize() {
-      w = parseInt(d3.select('.chart').style('width')) * 0.9;
-      h = parseInt(d3.select('.chart').style('height'));
+      w = window.innerWidth * 0.9;
 
       if (w < 1000) {
         w = 1000;
+        h = w * 0.8;
+      }
+      else {
+
+        if (window.innerWidth < window.innerHeight) {
+          h = window.innerHeight * 0.6;
+        }
+        else {
+          h = window.innerHeight * 0.8;
+        }
       }
 
       xScale.range([padding.left, w - padding.right]);
