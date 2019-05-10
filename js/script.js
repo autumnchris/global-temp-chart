@@ -11,7 +11,7 @@ function displayChart() {
       35,
       0
     ];
-    const padding = {
+    const margin = {
       top: 50,
       right: 40,
       bottom: 90,
@@ -36,14 +36,14 @@ function displayChart() {
 
     svg.append('g')
       .attr('class', 'y-axis')
-      .attr('transform', `translate(${padding.left}, 0)`);
+      .attr('transform', `translate(${margin.left}, 0)`);
 
     svg.selectAll('rect')
       .data(data)
       .enter()
       .append('rect')
       .attr('class', 'cell')
-      .attr('fill', (d) => `hsl(${colorData[Math.floor((d.variance + dataset.data.baseTemperature) / 2)]}, 75%, 50%)`)
+      .attr('fill', (d) => `hsl(${colorData[Math.floor((d.variance + dataset.data.baseTemperature) / 2)]}, 75%, 55%)`)
       .on('mouseover', handleMouseover)
       .on('mouseout', handleMouseout);
 
@@ -58,8 +58,8 @@ function displayChart() {
         .style('visibility', 'visible');
 
       tooltip.html(`${d3.timeFormat('%B')(d3.timeParse('%m')(d.month))} ${d.year}<br/>${(dataset.data.baseTemperature + d.variance).toFixed(2)}&deg;C<br/>${d.variance > 0 ? '+' + d.variance.toFixed(2) : d.variance.toFixed(2)} variance`)
-      .style('left', `${d3.select(this).attr('x') - 20}px`)
-      .style('top', `${d3.select(this).attr('y') - 80}px`);
+        .style('left', `${d3.event.pageX - 50}px`)
+        .style('top', `${d3.event.pageY - 100}px`);
     }
 
     function handleMouseout() {
@@ -70,19 +70,20 @@ function displayChart() {
       .data(colorData)
       .enter()
       .append('rect')
-      .attr('x', (d, i) => i * 30)
+      .attr('x', (d, i) => i * 60)
       .attr('y', 5)
-      .attr('width', 30)
+      .attr('width', 60)
       .attr('height', 15)
-      .attr('fill', (d) => `hsl(${d}, 75%, 50%)`)
+      .attr('fill', (d) => `hsl(${d}, 75%, 55%)`)
       .attr('stroke', '#fff');
 
     legend.selectAll('text')
       .data(colorData)
       .enter()
       .append('text')
-      .attr('x', (d, i) => i * 30)
+      .attr('x', (d, i) => i * 60)
       .attr('y', 30)
+      .attr('fill', '#fff')
       .text((d, i) => `${i * 2}+`)
       .style('font-size', '0.7rem');
 
@@ -103,14 +104,13 @@ function displayChart() {
         }
       }
 
-      xScale.range([padding.left, w - padding.right]);
-      yScale.range([padding.bottom, h - padding.top]);
+      xScale.range([margin.left, w - margin.right]);
+      yScale.range([margin.bottom, h - margin.top]);
 
-      svg.attr('width', w)
-        .attr('height', h);
+      svg.attr('viewBox', `0 0 ${w} ${h}`);
 
       svg.select('.x-axis')
-        .attr('transform', `translate(0, ${h - padding.top})`)
+        .attr('transform', `translate(0, ${h - margin.top})`)
         .call(d3.axisBottom(xScale)
         .tickValues(xScale.domain().filter((d) => d % 20 === 0)));
 

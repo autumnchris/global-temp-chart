@@ -1,5 +1,5 @@
 html {
-  background: #ccc;
+  background: #333;
 }
 
 h1 {
@@ -17,29 +17,23 @@ main {
   padding: 25px 0 70px;
 }
 
-.chart {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  position: relative;
-}
-
 svg {
-  background: #fff;
+  height: 100%;
+  position: relative;
+  width: 100%;
 }
 
 .tooltip {
-  background: #333;
+  background: #fff;
   border-radius: 3px;
   box-shadow: 1px 1px 13px 0px #828282;
-  color: #fff;
+  color: #333;
   font-size: 0.8rem;
   line-height: 20px;
-  max-width: 120px;
   padding: 8px;
   pointer-events: none;
   position: absolute;
   text-align: left;
-  width: 100%;
   z-index: 1;
 }
 
@@ -57,7 +51,6 @@ svg {
 }
 
 footer {
-  background: #fff;
   bottom: 0;
   font-size: 0.8rem;
   left: 0;
@@ -73,7 +66,7 @@ footer a:visited,
 footer a:hover,
 footer a:active,
 footer a:focus {
-  color: #16599c;
+  color: #36e2d4;
 }
 
 @media only screen and (min-width: 600px) {
