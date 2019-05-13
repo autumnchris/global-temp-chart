@@ -1,29 +1,28 @@
 function displayChart() {
+  const margin = {
+    top: 50,
+    right: 40,
+    bottom: 90,
+    left: 100
+  };
+  let w;
+  let h;
+  const colorData = [
+    210,
+    175,
+    140,
+    105,
+    70,
+    35,
+    0
+  ];
 
-  axios.get('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json').then((dataset) => {
-    const data = dataset.data.monthlyVariance;
-    const colorData = [
-      210,
-      175,
-      140,
-      105,
-      70,
-      35,
-      0
-    ];
-    const margin = {
-      top: 50,
-      right: 40,
-      bottom: 90,
-      left: 100
-    };
-    let w;
-    let h;
-
+  d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json').then(dataset => {
     const xScale = d3.scaleBand()
-      .domain(data.map((d) => d.year));
+      .domain(dataset.monthlyVariance.map((d) => d.year));
     const yScale = d3.scaleBand()
-      .domain(data.map((d) => d3.timeParse('%m')(d.month)));
+      .domain(dataset.monthlyVariance.map((d) => d3.timeParse('%m')(d.month)));
+
     const svg = d3.select('.chart')
       .append('svg');
 
@@ -39,11 +38,11 @@ function displayChart() {
       .attr('transform', `translate(${margin.left}, 0)`);
 
     svg.selectAll('rect')
-      .data(data)
+      .data(dataset.monthlyVariance)
       .enter()
       .append('rect')
       .attr('class', 'cell')
-      .attr('fill', (d) => `hsl(${colorData[Math.floor((d.variance + dataset.data.baseTemperature) / 2)]}, 75%, 55%)`)
+      .attr('fill', (d) => `hsl(${colorData[Math.floor((d.variance + dataset.baseTemperature) / 2)]}, 75%, 55%)`)
       .on('mouseover', handleMouseover)
       .on('mouseout', handleMouseout);
 
@@ -57,7 +56,7 @@ function displayChart() {
         .duration(200)
         .style('visibility', 'visible');
 
-      tooltip.html(`${d3.timeFormat('%B')(d3.timeParse('%m')(d.month))} ${d.year}<br/>${(dataset.data.baseTemperature + d.variance).toFixed(2)}&deg;C<br/>${d.variance > 0 ? '+' + d.variance.toFixed(2) : d.variance.toFixed(2)} variance`)
+      tooltip.html(`${d3.timeFormat('%B')(d3.timeParse('%m')(d.month))} ${d.year}<br/>${(dataset.baseTemperature + d.variance).toFixed(2)}&deg;C<br/>${d.variance > 0 ? '+' + d.variance.toFixed(2) : d.variance.toFixed(2)} variance`)
         .style('left', `${d3.event.pageX - 50}px`)
         .style('top', `${d3.event.pageY - 100}px`);
     }
@@ -129,7 +128,7 @@ function displayChart() {
 
     d3.select(window)
       .on('resize', resize);
-  }).catch(() => {
+  }).catch(err => {
     document.querySelector('.error-message').style.display = 'block';
   });
 }
