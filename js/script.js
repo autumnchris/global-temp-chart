@@ -5,8 +5,8 @@ function displayChart() {
     bottom: 90,
     left: 100
   };
-  let w;
-  let h;
+  const w = 800;
+  const h = w * 0.5;
   const colorData = [
     210,
     175,
@@ -19,29 +19,41 @@ function displayChart() {
 
   d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json').then(dataset => {
     const xScale = d3.scaleBand()
-      .domain(dataset.monthlyVariance.map((d) => d.year));
+      .domain(dataset.monthlyVariance.map((d) => d.year))
+      .range([margin.left, w - margin.right]);
     const yScale = d3.scaleBand()
-      .domain(dataset.monthlyVariance.map((d) => d3.timeParse('%m')(d.month)));
+      .domain(dataset.monthlyVariance.map((d) => d3.timeParse('%m')(d.month)))
+      .range([margin.bottom, h - margin.top]);
 
     const svg = d3.select('.chart')
-      .append('svg');
+      .append('svg')
+      .attr('viewBox', `0 0 ${w} ${h}`);
 
     const legend = svg.append('g')
       .attr('class', 'legend')
       .attr('transform', 'translate(125, 35)');
 
     svg.append('g')
-      .attr('class', 'x-axis');
+      .attr('class', 'x-axis')
+      .attr('transform', `translate(0, ${h - margin.top})`)
+      .call(d3.axisBottom(xScale)
+      .tickValues(xScale.domain().filter((d) => d % 20 === 0)));
 
     svg.append('g')
       .attr('class', 'y-axis')
-      .attr('transform', `translate(${margin.left}, 0)`);
+      .attr('transform', `translate(${margin.left}, 0)`)
+      .call(d3.axisLeft(yScale)
+      .tickFormat(d3.timeFormat('%B')));
 
     svg.selectAll('rect')
       .data(dataset.monthlyVariance)
       .enter()
       .append('rect')
       .attr('class', 'cell')
+      .attr('x', (d) => xScale(d.year))
+      .attr('y', (d) => yScale(d3.timeParse('%m')(d.month)))
+      .attr('width', xScale.bandwidth())
+      .attr('height', yScale.bandwidth())
       .attr('fill', (d) => `hsl(${colorData[Math.floor((d.variance + dataset.baseTemperature) / 2)]}, 75%, 55%)`)
       .on('mouseover', handleMouseover)
       .on('mouseout', handleMouseout);
@@ -85,49 +97,6 @@ function displayChart() {
       .attr('fill', '#fff')
       .text((d, i) => `${i * 2}+`)
       .style('font-size', '0.7rem');
-
-    function resize() {
-      w = window.innerWidth * 0.9;
-
-      if (w < 1000) {
-        w = 1000;
-        h = w * 0.8;
-      }
-      else {
-
-        if (window.innerWidth < window.innerHeight) {
-          h = window.innerHeight * 0.6;
-        }
-        else {
-          h = window.innerHeight * 0.8;
-        }
-      }
-
-      xScale.range([margin.left, w - margin.right]);
-      yScale.range([margin.bottom, h - margin.top]);
-
-      svg.attr('viewBox', `0 0 ${w} ${h}`);
-
-      svg.select('.x-axis')
-        .attr('transform', `translate(0, ${h - margin.top})`)
-        .call(d3.axisBottom(xScale)
-        .tickValues(xScale.domain().filter((d) => d % 20 === 0)));
-
-      svg.select('.y-axis')
-        .call(d3.axisLeft(yScale)
-        .tickFormat(d3.timeFormat('%B')));
-
-      svg.selectAll('.cell')
-        .attr('x', (d) => xScale(d.year))
-        .attr('y', (d) => yScale(d3.timeParse('%m')(d.month)))
-        .attr('width', xScale.bandwidth())
-        .attr('height', yScale.bandwidth());
-    }
-
-    resize();
-
-    d3.select(window)
-      .on('resize', resize);
   }).catch(err => {
     document.querySelector('.error-message').style.display = 'block';
   });
