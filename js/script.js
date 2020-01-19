@@ -86,7 +86,7 @@ function displayChart() {
       .attr('width', 60)
       .attr('height', 15)
       .attr('fill', (d) => `hsl(${d}, 75%, 55%)`)
-      .attr('stroke', '#fff');
+      .attr('stroke', 'hsl(0, 0%, 20%)');
 
     legend.selectAll('text')
       .data(colorData)
@@ -94,7 +94,7 @@ function displayChart() {
       .append('text')
       .attr('x', (d, i) => i * 60)
       .attr('y', 30)
-      .attr('fill', '#fff')
+      .attr('fill', 'hsl(0, 0%, 100%)')
       .text((d, i) => `${i * 2}+`)
       .style('font-size', '0.7rem');
   }).catch(err => {
