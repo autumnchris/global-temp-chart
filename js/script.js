@@ -95,7 +95,7 @@ function displayChart() {
       .attr('x', (d, i) => i * 60)
       .attr('y', 30)
       .attr('fill', 'hsl(0, 0%, 100%)')
-      .text((d, i) => `${i * 2}+`)
+      .text((d, i) => `${i * 2}\u00B0C`)
       .style('font-size', '0.7rem');
   }).catch(err => {
     document.querySelector('.error-message').style.display = 'block';
