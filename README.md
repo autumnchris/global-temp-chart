@@ -1,6 +1,8 @@
 # Global Temperature Chart
 
-My project for the [Visualize Data with a Heat Map challenge](https://learn.freecodecamp.org/data-visualization/data-visualization-projects/visualize-data-with-a-heat-map) as part of the curriculum for the Data Visualization Certification on [freeCodeCamp](https://www.freecodecamp.org).
+A D3.js heat map that displays the monthly variance of the global temperature from 1753 to 2015.
+
+Inspired by the [Visualize Data with a Heat Map challenge]() as part of the curriculum for the [Data Visualization Certification]() on [freeCodeCamp](https://www.freecodecamp.org).
 
 ---
 
