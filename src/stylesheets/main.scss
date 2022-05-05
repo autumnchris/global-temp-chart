@@ -4,7 +4,7 @@
 .heat-map {
   height: 100%;
   position: relative;
-  width: 100%;
+  width: 90%;
 }
 
 .tooltip {
@@ -13,14 +13,24 @@
   -webkit-box-shadow: 1px 1px 13px 0px change-color($black, $lightness: 51%);
   box-shadow: 1px 1px 13px 0px change-color($black, $lightness: 51%);
   color: change-color($black, $lightness: 20%);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+  line-height: normal;
   padding: 8px;
   pointer-events: none;
   position: absolute;
   text-align: left;
   z-index: 1;
   @media all and (min-width: 1500px) {
-    font-size: 1.1rem;
+    font-size: 1rem;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 45px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: change-color($black, $lightness: 100%) transparent transparent transparent;
   }
 }
 

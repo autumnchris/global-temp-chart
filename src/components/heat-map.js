@@ -101,7 +101,7 @@ const HeatMap = () => {
 
     tooltip.html(`${d3.timeFormat('%B')(d3.timeParse('%m')(d.month))} ${d.year}<br/>${(baseTemperature + d.variance).toFixed(2)}&deg;C<br/>${d.variance > 0 ? '+' + d.variance.toFixed(2) : d.variance.toFixed(2)} variance`)
       .style('left', `${(event.pageX - 50)}px`)
-      .style('top', `${(event.pageY - 100)}px`);
+      .style('top', `${(event.pageY - 70)}px`);
   }
 
   function handleMouseout() {
