@@ -1,5 +1,5 @@
 import React from 'react';
-import HeatMap from './heat-map';
+import HeatMap from './Heat-Map';
 
 const App = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3';
-import LoadingSpinner from './loading-spinner';
-import ErrorMessage from './error-message';
+import LoadingSpinner from './Loading-Spinner';
+import ErrorMessage from './Error-Message';
 
 const HeatMap = () => {
   const margin = {
