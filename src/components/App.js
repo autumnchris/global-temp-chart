@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { json } from 'd3';
-import HeatMap from './Heat-Map';
-import LoadingSpinner from './Loading-Spinner';
-import ErrorMessage from './Error-Message';
+import HeatMap from './HeatMap';
+import LoadingSpinner from './LoadingSpinner';
+import ErrorMessage from './ErrorMessage';
 
 const App = () => {
   const [loadingStatus, setLoadingStatus] = useState(true);
