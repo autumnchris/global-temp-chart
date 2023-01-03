@@ -6,19 +6,16 @@ import ErrorMessage from './Error-Message';
 
 const App = () => {
   const [loadingStatus, setLoadingStatus] = useState(true);
-  const [loadSuccess, setLoadSuccess] = useState(false);
   const [tempData, setTempData] = useState([]);
   const [baseTemp, setBaseTemp] = useState(0);
 
   useEffect(() => {
     json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json').then(dataset => {
       setLoadingStatus(false);
-      setLoadSuccess(true);
       setTempData(dataset.monthlyVariance);
       setBaseTemp(dataset.baseTemperature);
     }).catch(() => {
       setLoadingStatus(false);
-      setLoadSuccess(false);
       setTempData([]);
       setBaseTemp(0);
     });
@@ -31,7 +28,7 @@ const App = () => {
         {!loadingStatus && <h2>Base Temperature of {baseTemp}&deg;C</h2>}
       </header>
       <main>
-        {loadingStatus ? <LoadingSpinner /> : loadSuccess ? <HeatMap baseTemp={baseTemp} tempData={tempData} /> : <ErrorMessage />}
+        {loadingStatus && tempData.length === 0 ? <LoadingSpinner /> : tempData.length !== 0 ? <HeatMap baseTemp={baseTemp} tempData={tempData} /> : <ErrorMessage />}
       </main>
       <footer>Created by <a href="https://autumnchris.github.io/portfolio" target="_blank">Autumn Bullard</a> &copy; {new Date().getFullYear()}</footer>
     </React.Fragment>
