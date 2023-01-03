@@ -16,12 +16,13 @@
   font-size: 0.7rem;
   line-height: normal;
   padding: 8px;
+  -ms-pointer-events: none;
   pointer-events: none;
   position: absolute;
   text-align: left;
   z-index: 1;
   @media all and (min-width: 1500px) {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   &:after {
     content: "";
