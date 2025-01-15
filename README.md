@@ -10,6 +10,10 @@ Inspired by the [Visualize Data with a Heat Map challenge](https://www.freecodec
 * [D3.js](https://d3js.org)
 * [React.js](https://reactjs.org)
 * [Sass](http://sass-lang.com)
+* JavaScript
+* CSS3
+* HTML5
+* [Node.js](https://nodejs.org/en)
 * [Webpack](https://webpack.js.org)
 * AJAX
 * [Babel](https://babeljs.io)
